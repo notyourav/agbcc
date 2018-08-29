@@ -1507,6 +1507,7 @@ hash_expr_1 (x, mode, do_not_record_p)
 	   between various stages.  */
 	unsigned int h = 0;
 	unsigned char *p = (unsigned char *) XSTR (x, 0);
+    //printf("xstr: %s [%d]\n", p, SYMBOL_REF);
 	while (*p)
 	  h += (h << 7) + *p++; /* ??? revisit */
 	hash += ((unsigned) SYMBOL_REF << 7) + h;

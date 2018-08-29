@@ -41,6 +41,8 @@
 #include "toplev.h"
 #include "expr.h"
 
+#define DWARF2_DEBUGGING_INFO
+
 #if defined (DWARF2_DEBUGGING_INFO)
 #include "dwarf2out.h"
 #endif
@@ -2556,6 +2558,7 @@ rest_of_compilation(tree decl)
     tree saved_arguments = 0;
     int failure = 0;
 
+    //debug_tree(decl);
     /* If we are reconsidering an inline function
        at the end of compilation, skip the stuff for making it inline.  */
 

@@ -196,13 +196,13 @@ print_node (file, prefix, node, indent)
      it is easy to use the address of a lowest-level node
      as an argument in another call to debug_tree.  */
 
-  if (indent > 24)
+  if (indent > 240)
     {
       print_node_brief (file, prefix, node, indent);
       return;
     }
 
-  if (indent > 8 && (class == 't' || class == 'd'))
+  if (indent > 80 && (class == 't' || class == 'd'))
     {
       print_node_brief (file, prefix, node, indent);
       return;

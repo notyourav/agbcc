@@ -45,6 +45,8 @@ Boston, MA 02111-1307, USA.  */
 
 #define obstack_chunk_alloc xmalloc
 #define obstack_chunk_free free
+//#define GATHER_STATISTICS 1
+
 /* obstack.[ch] explicitly declined to prototype this. */
 extern int _obstack_allocated_p (struct obstack *h, void * obj);
 

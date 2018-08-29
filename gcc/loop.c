@@ -1835,6 +1835,15 @@ move_movables (movables, threshold, insn_count, loop_start, end, nregs)
 	      || (m->forces && m->forces->done
 		  && VARRAY_INT (n_times_set, m->forces->regno) == 1))
 	    {
+          if (loop_dump_stream) {
+            fprintf (loop_dump_stream, "(am: %d, tc: %d, f: %d | t: %d) ",
+                already_moved[regno],
+                (threshold * savings * m->lifetime) >= (moved_once[regno] ? insn_count * 2 : insn_count),
+                (m->forces && m->forces->done
+		  && VARRAY_INT (n_times_set, m->forces->regno) == 1),
+                threshold
+            );
+          }
 	      int count;
 	      register struct movable *m1;
 	      rtx first;
