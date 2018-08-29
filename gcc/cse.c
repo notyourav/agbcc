@@ -647,7 +647,7 @@ static void cse_around_loop(rtx);
 static void invalidate_skipped_set(rtx, rtx);
 static void invalidate_skipped_block(rtx);
 static void cse_check_loop_start(rtx, rtx);
-static void cse_set_around_loop(rtx, rtx, rtx);
+static void cse_set_around_loop(rtx, rtx, rtx, const char *);
 static rtx cse_basic_block(rtx, rtx, struct branch_path *, int);
 static void count_reg_usage(rtx, int *, rtx, int);
 
@@ -7489,6 +7489,10 @@ rtx loop_start;
     int i;
     struct table_elt *p;
 
+    if (static_file) {
+        fprintf(static_file, "Entered cse_around_loop\n");
+    }
+    
     /* If the jump at the end of the loop doesn't go to the start, we don't
        do anything.  */
     for (insn = PREV_INSN(loop_start);
@@ -7538,14 +7542,14 @@ rtx loop_start;
         if (GET_RTX_CLASS(GET_CODE(insn)) == 'i'
             && (GET_CODE(PATTERN(insn)) == SET
             || GET_CODE(PATTERN(insn)) == CLOBBER))
-            cse_set_around_loop(PATTERN(insn), insn, loop_start);
+            cse_set_around_loop(PATTERN(insn), insn, loop_start, __func__);
         else if (GET_RTX_CLASS(GET_CODE(insn)) == 'i'
              && GET_CODE(PATTERN(insn)) == PARALLEL)
             for (i = XVECLEN(PATTERN(insn), 0) - 1; i >= 0; i--)
                 if (GET_CODE(XVECEXP(PATTERN(insn), 0, i)) == SET
                     || GET_CODE(XVECEXP(PATTERN(insn), 0, i)) == CLOBBER)
                     cse_set_around_loop(XVECEXP(PATTERN(insn), 0, i), insn,
-                                loop_start);
+                                loop_start, __func__);
     }
 }
 
@@ -7651,13 +7655,15 @@ rtx set ATTRIBUTE_UNUSED;
    In any event, we invalidate whatever this SET or CLOBBER modifies.  */
 
 static void
-cse_set_around_loop(x, insn, loop_start)
+cse_set_around_loop(x, insn, loop_start, calling_fn_name)
 rtx x;
 rtx insn;
 rtx loop_start;
+const char * calling_fn_name;
 {
     struct table_elt *src_elt;
-
+    char * fn_names;
+    
     /* If this is a SET, see if we can replace SET_SRC, but ignore SETs that
        are setting PC or CC0 or whose SET_SRC is already a register.  */
     if (GET_CODE(x) == SET
@@ -7727,13 +7733,23 @@ rtx loop_start;
     /* Now invalidate anything modified by X.  */
     note_mem_written(SET_DEST(x));
 
+    if (static_file) {
+        fn_names = concatenate("cse_set_around_loop from ", calling_fn_name);
+        if (fn_names == NULL) {
+            fprintf(stderr, "Could not allocate for concatenate at %s:%d.\n", __FILE__, __LINE__);
+            abort();
+        }
+    } else {
+        fn_names = NULL;
+    }
+    
     /* See comment on similar code in cse_insn for explanation of these tests.  */
     if (GET_CODE(SET_DEST(x)) == REG || GET_CODE(SET_DEST(x)) == SUBREG
         || GET_CODE(SET_DEST(x)) == MEM)
-        invalidate(SET_DEST(x), VOIDmode, __func__);
+        invalidate(SET_DEST(x), VOIDmode, fn_names);
     else if (GET_CODE(SET_DEST(x)) == STRICT_LOW_PART
          || GET_CODE(SET_DEST(x)) == ZERO_EXTRACT)
-        invalidate(XEXP(SET_DEST(x), 0), GET_MODE(SET_DEST(x)), __func__);
+        invalidate(XEXP(SET_DEST(x), 0), GET_MODE(SET_DEST(x)), fn_names);
 }
 
 /* Find the end of INSN's basic block and return its range,
@@ -8320,6 +8336,26 @@ int around_loop;
        we can cse into the loop.  Don't do this if we changed the jump
        structure of a loop unless we aren't going to be following jumps.  */
 
+    
+    
+    if (static_file) {
+        fprintf(static_file, "Attempting to call cse_around_loop");
+        if ((cse_jumps_altered == 0
+             || (flag_cse_follow_jumps == 0 && flag_cse_skip_blocks == 0))
+             && around_loop && to != 0) {
+            fprintf(static_file, ": insn=NOTE: %u", GET_CODE(to) == NOTE);
+            if (GET_CODE(to) == NOTE) {
+                fprintf(static_file, ", line=LOOPEND: %u, previnsn=jump: %u", NOTE_LINE_NUMBER(to) == NOTE_INSN_LOOP_END, GET_CODE(PREV_INSN(to)) == JUMP_INSN);
+                if (GET_CODE(PREV_INSN(to)) == JUMP_INSN) {
+                    fprintf(static_file, ", jumplabelnot=0: %u", JUMP_LABEL(PREV_INSN(to)) != 0);
+                    if (JUMP_LABEL(PREV_INSN(to)) != 0) {
+                        fprintf(static_file, ", previnsnjumplabelNuses==1: %u", LABEL_NUSES(JUMP_LABEL(PREV_INSN(to))) == 1);
+                    }
+                }
+            }
+        }
+        fprintf(static_file, "\n");
+    }
     if ((cse_jumps_altered == 0
          || (flag_cse_follow_jumps == 0 && flag_cse_skip_blocks == 0))
         && around_loop && to != 0
