@@ -530,9 +530,13 @@ global_init (FILE *file)
 	    {
 	      int r = allocno_order[i];
 	      fprintf (file,
-		       "Register %d, refs = %d, live_length = %d, size = %d\n",
+		       "Register %d, refs = %d, live_length = %d, size = %d, weight = %lf\n",
 		       allocno_reg[r], allocno_n_refs[r],
-		       allocno_live_length[r], allocno_size[r]);
+		       allocno_live_length[r], allocno_size[r],
+               (((double) (floor_log2(allocno_n_refs[r]) * allocno_n_refs[r])
+                / allocno_live_length[r])
+                * 10000 * allocno_size[r])
+                );
 	    }
 	  putc ('\n', file);
 	}
