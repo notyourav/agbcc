@@ -10,25 +10,30 @@ EXE :=
 endif
 
 CC1 := ../agbcc
-CFLAGS := -O2 -mthumb-interwork -fhex-asm
+CFLAGS := -mthumb-interwork -O2
 
 CPPFLAGS := -I ../ginclude -I ../agbcc_src/libc/include -nostdinc -undef
 ASFLAGS := -mcpu=arm7tdmi
 ARFLAGS := rc
 
-C_SRCS := libisagbprn.c
+C_SRCS := librfu_rfu.c librfu_stwi.c
 C_OBJS := $(C_SRCS:%.c=%.o)
 
-LIB := libisagbprn.a
+ASM_SRCS := librfu_intr.s librfu.s
+ASM_OBJS := $(ASM_SRCS:%.s=%.o)
+
+ALL_OBJS := $(C_OBJS) $(ASM_OBJS)
+
+LIB := librfu.a
 
 .PHONY: all clean $(LIB)
 
 all: $(LIB)
 
 clean:
-	rm -f $(LIB) $(C_SRCS:%.c=%.i) $(C_SRCS:%.c=%.s) $(C_OBJS)
+	rm -f $(LIB) $(C_SRCS:%.c=%.i) $(C_SRCS:%.c=%.s) $(ALL_OBJS)
 
-$(LIB): $(C_OBJS)
+$(LIB): $(ALL_OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
 $(C_OBJS): %.o: %.c
@@ -36,3 +41,6 @@ $(C_OBJS): %.o: %.c
 	@$(CC1) $(CFLAGS) -o $*.s $*.i
 	@echo -e ".text\n\t.align\t2, 0\n" >> $*.s
 	$(AS) $(ASFLAGS) -o $@ $*.s
+
+$(ASM_OBJS): %.o: %.s
+	$(AS) $(ASFLAGS) -o $@ $<

@@ -8,13 +8,16 @@ if [ "$1" != "" ]; then
     cp agbcc $1/tools/agbcc/bin/
     cp old_agbcc $1/tools/agbcc/bin/
     cp -R agbcc/libc/include/ $1/tools/agbcc/ #drop include, because we don't want include/include
-    cp ginclude/* $1/tools/agbcc/include/
+    cp -R ginclude/* $1/tools/agbcc/include/
     cp libgcc.a $1/tools/agbcc/lib/
     cp libc.a $1/tools/agbcc/lib/
     cp libsiirtc.a $1/tools/agbcc/lib/
+    cp siirtc/siirtc.h $1/tools/agbcc/include
     cp libagbsyscall.a $1/tools/agbcc/lib/
     cp libisagbprn.a $1/tools/agbcc/lib/
     cp libm4a.a $1/tools/agbcc/lib/
+    cp librfu.a $1/tools/agbcc/lib/
+    cp librfu/librfu.h $1/tools/agbcc/include/
 else
     echo "Usage: install.sh PATH"
 fi

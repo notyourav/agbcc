@@ -1,4 +1,4 @@
-#include "global.h"
+#include <gba/gba.h>
 #include "librfu.h"
 
 extern IntrFunc IntrSIO32(void);

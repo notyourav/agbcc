@@ -24,3 +24,6 @@ mv libisagbprn/libisagbprn.a .
 make -C m4a clean
 make -C m4a
 mv m4a/libm4a.a .
+make -C librfu clean
+make -C librfu
+mv librfu/librfu.a .

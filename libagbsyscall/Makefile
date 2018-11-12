@@ -26,5 +26,5 @@ clean:
 $(LIB): $(ASM_OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
-%.o: %.s
+$(ASM_OBJS): %.o: %.s
 	$(AS) $(ASFLAGS) -o $@ $<

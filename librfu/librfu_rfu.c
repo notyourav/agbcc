@@ -1,6 +1,4 @@
-#include "global.h"
-#include "main.h"
-
+#include <gba/gba.h>
 #include "librfu.h"
 
 // Nonmatching, only register differences
