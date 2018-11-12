@@ -1,14 +1,20 @@
 #!/bin/sh
 set -e
-make -C gcc clean
-make -C gcc old
-mv gcc/old_agbcc .
-make -C gcc clean
-make -C gcc
-mv gcc/agbcc .
-make -C libgcc clean
-make -C libgcc
-mv libgcc/libgcc.a .
-make -C libc clean
-make -C libc
-mv libc/libc.a .
+make -C agbcc_src/gcc clean
+make -C agbcc_src/gcc old
+mv agbcc_src/gcc/old_agbcc .
+make -C agbcc_src/gcc clean
+make -C agbcc_src/gcc
+mv agbcc_src/gcc/agbcc .
+make -C agbcc_src/libgcc clean
+make -C agbcc_src/libgcc
+mv agbcc_src/libgcc/libgcc.a .
+make -C agbcc_src/libc clean
+make -C agbcc_src/libc
+mv agbcc_src/libc/libc.a .
+make -C siirtc clean
+make -C siirtc
+mv siirtc/libsiirtc.a .
+make -C libagbsyscall clean
+make -C libagbsyscall
+mv libagbsyscall/libagbsyscall.a .

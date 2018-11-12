@@ -2,7 +2,7 @@
 // S-3511A real-time clock (RTC). This library ("SIIRTC_V001") is for
 // communicating with the RTC.
 
-#include "gba/gba.h"
+#include <gba/gba.h>
 #include "siirtc.h"
 
 #define STATUS_INTFE  0x02 // frequency interrupt enable
