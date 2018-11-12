@@ -10,16 +10,16 @@ EXE :=
 endif
 
 CC1 := ../agbcc
-CFLAGS := -mthumb-interwork
+CFLAGS := -O2 -mthumb-interwork -fhex-asm
 
 CPPFLAGS := -I ../ginclude -I ../agbcc_src/libc/include -nostdinc -undef
 ASFLAGS := -mcpu=arm7tdmi
 ARFLAGS := rc
 
-C_SRCS := siirtc.c
+C_SRCS := libisagbprn.c
 C_OBJS := $(C_SRCS:%.c=%.o)
 
-LIB := libsiirtc.a
+LIB := libisagbprn.a
 
 .PHONY: all clean $(LIB)
 

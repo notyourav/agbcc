@@ -13,6 +13,7 @@ if [ "$1" != "" ]; then
     cp libc.a $1/tools/agbcc/lib/
     cp libsiirtc.a $1/tools/agbcc/lib/
     cp libagbsyscall.a $1/tools/agbcc/lib/
+    cp libisagbprn.a $1/tools/agbcc/lib
 else
     echo "Usage: install.sh PATH"
 fi

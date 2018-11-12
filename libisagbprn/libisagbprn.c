@@ -1,6 +1,6 @@
 #include <stdarg.h>
 #include <stdio.h>
-#include "gba/gba.h"
+#include <gba/gba.h>
 #include "config.h"
 
 #define AGB_PRINT_FLUSH_ADDR 0x9FE209D

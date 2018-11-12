@@ -18,3 +18,6 @@ mv siirtc/libsiirtc.a .
 make -C libagbsyscall clean
 make -C libagbsyscall
 mv libagbsyscall/libagbsyscall.a .
+make -C libisagbprn clean
+make -C libisagbprn
+mv libisagbprn/libisagbprn.a .

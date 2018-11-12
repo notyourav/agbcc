@@ -27,4 +27,4 @@ $(LIB): $(ASM_OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
 %.o: %.s
-	$(AS) $(ASFLAGS) -o $@ $*.s
+	$(AS) $(ASFLAGS) -o $@ $<
