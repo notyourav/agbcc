@@ -1,4 +1,4 @@
-#include "gba/m4a_internal.h"
+#include <gba/m4a_internal.h>
 
 void m4aMPlayTempoControl(struct MusicPlayerInfo *mplayInfo, u16 tempo)
 {

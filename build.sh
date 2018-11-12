@@ -21,3 +21,6 @@ mv libagbsyscall/libagbsyscall.a .
 make -C libisagbprn clean
 make -C libisagbprn
 mv libisagbprn/libisagbprn.a .
+make -C m4a clean
+make -C m4a
+mv m4a/libm4a.a .

@@ -1,4 +1,4 @@
-#include "gba/m4a_internal.h"
+#include <gba/m4a_internal.h>
 
 #define BSS_CODE __attribute__((section(".bss.code")))
 

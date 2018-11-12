@@ -1,6 +1,6 @@
-	.include "asm/macros.inc"
-	.include "constants/gba_constants.inc"
-	.include "constants/m4a_constants.inc"
+	.include "../asminclude/macros.inc"
+	.include "../asminclude/gba_constants.inc"
+	.include "../asminclude/m4a_constants.inc"
 
 	.syntax unified
 
