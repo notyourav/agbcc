@@ -1,7 +1,8 @@
 #ifndef GUARD_AGB_FLASH_H
 #define GUARD_AGB_FLASH_H
 
-#include "global.h"
+#include <gba/gba.h>
+#include <gba/flash_internal.h>
 
 // Exported type declarations
 

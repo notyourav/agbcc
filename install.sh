@@ -18,6 +18,8 @@ if [ "$1" != "" ]; then
     cp libm4a.a $1/tools/agbcc/lib/
     cp librfu.a $1/tools/agbcc/lib/
     cp librfu/librfu.h $1/tools/agbcc/include/
+    cp libagb_flash.a $1/tools/agbcc/lib/
+    cp agb_flash/agb_flash.h $1/tools/agbcc/include/
 else
     echo "Usage: install.sh PATH"
 fi
