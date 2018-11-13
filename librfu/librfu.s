@@ -6511,3 +6511,11 @@ _Str_RFU_MBOOT: @ 89A324C
 	.align 2
 _Str_Sio32ID: @ 89A3258
 	.asciz "NINTENDOSio32ID_030820"
+
+	.comm gRfuState, 0x8
+	.comm gUnknown_03007870, 0x10
+	.comm gUnknown_03007880, 0x10
+	.comm gUnknown_03007890, 0x4
+	.comm gUnknown_03007894, 0x4
+	.comm gUnknown_03007898, 0x8
+	.comm gUnknown_030078A0, 0xC

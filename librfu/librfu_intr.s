@@ -685,3 +685,12 @@ sub_82E3EA8: @ 82E3EA8
 	bx r2
 	arm_func_end sub_82E3EA8
 
+	arm_func_start sub_82E3EAC
+sub_82E3EAC: @ 82E3EAC
+	bx r1
+	arm_func_end sub_82E3EAC
+
+	arm_func_start sub_82E3EB0
+sub_82E3EB0: @ 82E3EB0
+	bx r0
+	arm_func_end sub_82E3EB0
