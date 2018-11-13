@@ -498,7 +498,7 @@ _082E4246:
 	thumb_func_start sub_82E424C
 sub_82E424C: @ 82E424C
 	push {lr}
-	ldr r2, =gUnknown_089A324C
+	ldr r2, =_Str_RFU_MBOOT
 	ldr r3, =gDma3Requests + 0xE0
 	b _082E4266
 	.align 2, 0
@@ -3444,7 +3444,7 @@ _082E58C0:
 	movs r2, 0
 	movs r0, 0x1
 	ands r0, r3
-	ldr r4, =gUnknown_089A3220
+	ldr r4, =_Str_RfuHeader
 	cmp r0, 0
 	bne _082E58E2
 	movs r1, 0x1
@@ -4450,7 +4450,7 @@ rfu_STC_NI_constructLLSF: @ 82E6060
 	ldr r0, [r2]
 	ldrb r0, [r0]
 	lsls r0, 4
-	ldr r1, =gUnknown_089A3220
+	ldr r1, =_Str_RfuHeader
 	adds r0, r1
 	mov r8, r0
 	ldrh r1, [r4]
@@ -4697,7 +4697,7 @@ _082E624C:
 	ldr r2, [r0]
 	ldrb r0, [r2]
 	lsls r0, 4
-	ldr r1, =gUnknown_089A3220
+	ldr r1, =_Str_RfuHeader
 	adds r5, r0, r1
 	ldrh r0, [r4]
 	movs r1, 0xF
@@ -5072,7 +5072,7 @@ rfu_STC_analyzeLLSF: @ 82E6510
 	movs r1, 0x1
 	ands r0, r1
 	lsls r0, 4
-	ldr r1, =gUnknown_089A3220
+	ldr r1, =_Str_RfuHeader
 	adds r6, r0, r1
 	ldrb r0, [r6]
 	cmp r3, r0
@@ -6429,7 +6429,7 @@ _082E6FF6:
 	cmp r0, 0x3
 	bhi _082E700C
 	lsls r0, 1
-	ldr r1, =gUnknown_089A3258
+	ldr r1, =_Str_Sio32ID
 	adds r0, r1
 	ldrh r0, [r0]
 	b _082E700E
@@ -6488,3 +6488,26 @@ _082E705C:
 	thumb_func_end sub_82E6FA2
 
 	.align 2, 0 @ Don't pad with nop.
+
+	.section .rodata
+
+_Str_RfuHeader: @ 89A3220
+	.byte 2, 14, 0, 10, 9, 5, 7, 2
+	.byte 0, 15, 1, 3, 3, 0, 31, 0
+	.byte 3, 22, 18, 14, 13, 9, 11, 3
+	.byte 15, 15, 1, 3, 3, 0, 0x7f, 0
+
+	.ascii "RFU_V"
+	.byte VERSION_MAJOR + 0x30
+	.byte VERSION_MINOR + 0x30
+	.byte (VERSION_REVISION / 10) + 0x30
+	.byte (VERSION_REVISION % 10) + 0x30
+	.byte 0
+
+	.align 2
+_Str_RFU_MBOOT: @ 89A324C
+	.asciz "RFU-MBOOT"
+
+	.align 2
+_Str_Sio32ID: @ 89A3258
+	.asciz "NINTENDOSio32ID_030820"

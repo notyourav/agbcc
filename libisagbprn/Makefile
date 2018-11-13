@@ -16,7 +16,7 @@ CPPFLAGS := -I ../ginclude -I ../agbcc_src/libc/include -nostdinc -undef
 ASFLAGS := -mcpu=arm7tdmi
 ARFLAGS := rc
 
-C_SRCS := libisagbprn.c
+C_SRCS := libisagbprn.c nocashgba.c
 C_OBJS := $(C_SRCS:%.c=%.o)
 
 LIB := libisagbprn.a

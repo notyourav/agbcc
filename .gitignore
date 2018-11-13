@@ -1,3 +1,10 @@
 *.exe
 *.o
 *.a
+agbcc
+old_agbcc
+cmake-*
+.idea/
+CMakeLists.txt
+temp.*
+tmp.*

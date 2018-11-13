@@ -25,8 +25,11 @@ make -C m4a clean
 make -C m4a
 mv m4a/libm4a.a .
 make -C librfu clean
-make -C librfu
-mv librfu/librfu.a .
+make -C librfu v1024
+mv librfu/librfu_1024.a .
+make -C librfu clean
+make -C librfu v1026
+mv librfu/librfu_1026.a .
 make -C agb_flash clean
 make -C agb_flash
 mv agb_flash/libagb_flash.a .

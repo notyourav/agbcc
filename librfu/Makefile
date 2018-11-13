@@ -26,14 +26,19 @@ ALL_OBJS := $(C_OBJS) $(ASM_OBJS)
 
 LIB := librfu.a
 
-.PHONY: all clean $(LIB)
+.PHONY: all clean $(LIB) v1024 v1026
 
 all: $(LIB)
 
 clean:
-	rm -f $(LIB) $(C_SRCS:%.c=%.i) $(C_SRCS:%.c=%.s) $(ALL_OBJS)
+	rm -f $(LIB) $(LIB:%.a=%_1024.a) $(LIB:%.a=%_1026.a) $(C_SRCS:%.c=%.i) $(C_SRCS:%.c=%.s) $(ALL_OBJS)
 
-$(LIB): $(ALL_OBJS)
+v1024: $(LIB:%.a=%_1024.a)
+v1024: ASFLAGS += --defsym VERSION_MAJOR=1 --defsym VERSION_MINOR=0 --defsym VERSION_REVISION=24
+v1026: $(LIB:%.a=%_1026.a)
+v1026: ASFLAGS += --defsym VERSION_MAJOR=1 --defsym VERSION_MINOR=0 --defsym VERSION_REVISION=26
+
+%.a: $(ALL_OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
 $(C_OBJS): %.o: %.c

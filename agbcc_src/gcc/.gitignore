@@ -26,3 +26,16 @@ s-opinit
 s-output
 s-peep
 s-recog
+genattr
+genattrtab
+gencheck
+gencodes
+genconfig
+genemit
+genextract
+genflags
+gengenrtl
+genopinit
+genoutput
+genpeep
+genrecog

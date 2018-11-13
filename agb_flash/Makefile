@@ -23,7 +23,7 @@ agb_flash.o: CFLAGS := -O -mthumb-interwork
 agb_flash_1m.o: CFLAGS := -O -mthumb-interwork
 agb_flash_mx.o: CFLAGS := -O -mthumb-interwork
 
-LIB := libsiirtc.a
+LIB := libagb_flash.a
 
 .PHONY: all clean $(LIB)
 
