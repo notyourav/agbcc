@@ -30,3 +30,6 @@ mv librfu/librfu.a .
 make -C agb_flash clean
 make -C agb_flash
 mv agb_flash/libagb_flash.a .
+make -C libgcnmultiboot clean
+make -C libgcnmultiboot
+mv libgcnmultiboot/libgcnmultiboot.a .

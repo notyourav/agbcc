@@ -20,6 +20,8 @@ if [ "$1" != "" ]; then
     cp librfu/librfu.h $1/tools/agbcc/include/
     cp libagb_flash.a $1/tools/agbcc/lib/
     cp agb_flash/agb_flash.h $1/tools/agbcc/include/
+    cp libgcnmultiboot.a $1/tools/agbcc/lib/
+    cp libgcnmultiboot/libgcnmultiboot.h $1/tools/agbcc/include/
 else
     echo "Usage: install.sh PATH"
 fi

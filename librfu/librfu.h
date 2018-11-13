@@ -1,6 +1,8 @@
 #ifndef GUARD_LIBRFU_H
 #define GUARD_LIBRFU_H
 
+#include <gba/gba.h>
+
 typedef void (*IntrFunc)(void);
 
 enum

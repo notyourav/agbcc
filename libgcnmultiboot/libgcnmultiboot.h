@@ -1,7 +1,7 @@
 #ifndef GUARD_LIBGCMMULTIBOOT_H
 #define GUARD_LIBGCNMULTIBOOT_H
 
-#include "global.h"
+#include <gba/gba.h>
 
 struct GcmbStruct
 {
