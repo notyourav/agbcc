@@ -16,7 +16,7 @@ CPPFLAGS := -I ../ginclude -I ../agbcc_src/libc/include -nostdinc -undef
 ASFLAGS := -mcpu=arm7tdmi
 ARFLAGS := rc
 
-C_SRCS := m4a_2.c m4a_4.c
+C_SRCS := m4a_2.c m4a_4.c m4a_tables.c
 C_OBJS := $(C_SRCS:%.c=%.o)
 
 ASM_SRCS := m4a_1.s m4a_3.s

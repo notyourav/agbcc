@@ -4,6 +4,10 @@
 
 	.syntax unified
 
+	.bss
+sPCMSample: @ s8[64]
+    .space 0x40
+
 	.text
 
 	thumb_func_start umul3232H32
@@ -678,7 +682,7 @@ sub_82DF758:
 	ldr r1, [r4, o_SoundChannel_wav]
 	add r2, r2, r1
 	add r2, r2, 0x10
-	ldr r5, =gUnknown_03001300
+	ldr r5, =sPCMSample
 	ldr r6, =gDeltaEncodingTable
 	mov r7, 0x40
 	ldrb lr, [r2], 1
@@ -699,7 +703,7 @@ _081DD57C:
 	subs r7, r7, 2
 	bgt _081DD568
 _081DD594:
-	ldr r5, =gUnknown_03001300
+	ldr r5, =sPCMSample
 	and r0, r3, 0x3F
 	ldrsb r1, [r5, r0]
 	pop {r0,r2,r5-r7,pc}
