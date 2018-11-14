@@ -38,5 +38,5 @@ $(LIB): $(C_OBJS)
 $(C_OBJS): %.o: %.c
 	@$(CPP) $(CPPFLAGS) $< -o $*.i
 	@$(CC1) $(CFLAGS) -o $*.s $*.i
-	@$(shell echo -e ".text\n\t.align\t2, 0\n" >> $*.s)
+	@echo -e ".text\n\t.align\t2, 0\n" >> $*.s
 	$(AS) $(ASFLAGS) -o $@ $*.s
