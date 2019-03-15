@@ -1417,7 +1417,7 @@ extern int global_alloc			(FILE *);
 extern void dump_global_regs		(FILE *);
 #endif
 #ifdef HARD_CONST
-extern void retry_global_alloc		(int, HARD_REG_SET);
+extern void retry_global_alloc		(int, HARD_REG_SET, FILE *);
 #endif
 
 /* In regclass.c */

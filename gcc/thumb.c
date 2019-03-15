@@ -517,9 +517,10 @@ final_prescan_insn(rtx insn)
 {
     extern int *insn_addresses;
 
-    if (flag_print_asm_name)
+    // this is obnoxious
+    /*if (flag_print_asm_name)
         fprintf(asm_out_file, "%s 0x%04x\n", ASM_COMMENT_START,
-                insn_addresses[INSN_UID(insn)]);
+                insn_addresses[INSN_UID(insn)]);*/
 }
 
 

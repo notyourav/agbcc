@@ -3590,7 +3590,7 @@ finish_spills (global, dumpfile)
 	    COPY_HARD_REG_SET (forbidden, bad_spill_regs_global);
 	    IOR_HARD_REG_SET (forbidden, pseudo_forbidden_regs[i]);
 	    IOR_HARD_REG_SET (forbidden, pseudo_previous_regs[i]);
-	    retry_global_alloc (i, forbidden);
+	    retry_global_alloc (i, forbidden, dumpfile);
 	    if (reg_renumber[i] >= 0)
 	      CLEAR_REGNO_REG_SET (spilled_pseudos, i);
 	  }

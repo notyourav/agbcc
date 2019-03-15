@@ -1999,7 +1999,7 @@ extern void init_decl_processing		(void);
 extern void copy_lang_decl			(tree);
 
 /* Function called with no arguments to parse and compile the input.  */
-extern int yyparse				(void);
+extern int yyparse				(void *);
 
 /* Functions for processing symbol declarations.  */
 /* Function to enter a new lexical scope.

@@ -196,9 +196,15 @@ int global_reg_dump = 0;
 int jump2_opt_dump = 0;
 int flag_print_asm_name = 0;
 int mach_dep_reorg_dump = 0;
+int asm_conv_done_dump = 0;
+int tree_dump = 0;
+int c_parse_dump = 0;
+
 enum graph_dump_types graph_dump_format;
 
 /* Name for output file of assembly code, specified with -o.  */
+
+static FILE * c_parse_file = NULL;
 
 char *asm_file_name;
 
@@ -1901,7 +1907,7 @@ compile_file(char *name)
 {
     tree globals;
     int start_time;
-
+    char * c_parse_file_name;
     int name_specified = name != 0;
 
     if (dump_base_name == 0)
@@ -2047,6 +2053,22 @@ compile_file(char *name)
         if (graph_dump_format != no_graph)
             clean_graph_dump_file(dump_base_name, ".mach");
     }
+    if (asm_conv_done_dump)
+    {
+        clean_dump_file(".done");
+        if (graph_dump_format != no_graph)
+            clean_graph_dump_file(dump_base_name, ".done");
+    }
+    
+    if (tree_dump) {
+        clean_dump_file(".tree");
+        if (graph_dump_format != no_graph)
+            clean_graph_dump_file(dump_base_name, ".tree");
+    }
+    
+    if (c_parse_dump) {
+        clean_dump_file(".yydebug");
+    }
 
     /* Open assembler code output file.  */
 
@@ -2161,12 +2183,26 @@ compile_file(char *name)
 
     init_final(main_input_filename);
 
+    if (c_parse_dump) {
+        c_parse_file_name = (char *) xmalloc(strlen(dump_base_name) + strlen(".yydebug") + 1);
+
+        strcpy(c_parse_file_name, dump_base_name);
+        strcat(c_parse_file_name, ".yydebug");
+
+        c_parse_file = fopen(c_parse_file_name, "a");
+
+        if (c_parse_file == NULL)
+            pfatal_with_name(c_parse_file_name);
+
+        free(c_parse_file_name);
+    }
+
     start_time = get_run_time();
 
     /* Call the parser, which parses the entire file
        (calling rest_of_compilation for each function).  */
 
-    if (yyparse() != 0)
+    if (yyparse(c_parse_file) != 0)
     {
         if (errorcount == 0)
             fprintf(stderr, "Errors detected in input file (your bison.simple is out of date)");
@@ -2185,6 +2221,13 @@ compile_file(char *name)
     parse_time -= integration_time;
     parse_time -= varconst_time;
 
+    if (c_parse_dump) {
+        fflush(c_parse_file);
+        fclose(c_parse_file);
+
+        c_parse_file = NULL;
+    }
+    
     if (flag_syntax_only)
         goto finish_syntax;
 
@@ -2439,6 +2482,10 @@ finish_syntax:
             finish_graph_dump_file(dump_base_name, ".gcse");
         if (mach_dep_reorg_dump)
             finish_graph_dump_file(dump_base_name, ".mach");
+        if (asm_conv_done_dump)
+            finish_graph_dump_file(dump_base_name, ".done");
+        if (tree_dump)
+            finish_graph_dump_file(dump_base_name, ".tree");
     }
 
     /* Free up memory for the benefit of leak detectors.  */
@@ -3184,11 +3231,17 @@ rest_of_compilation(tree decl)
                 assemble_end_function(decl, fnname);
                 if (loud_flag)
                     fflush(asm_out_file);
-
+                
+                if (asm_conv_done_dump) {
+                    dump_rtl(".done", decl, print_rtl_with_bb, insns);
+                    if (graph_dump_format != no_graph)
+                        print_rtl_graph_with_bb(dump_base_name, ".done", insns);
+                }
+                
                 /* Release all memory held by regsets now */
                 regset_release_memory();
             });
-
+    
     /* Write debug symbols if requested */
 
     /* Note that for those inline functions where we don't initially
@@ -3673,6 +3726,8 @@ main(int argc, char **argv)
                         cse_dump = 1, cse2_dump = 1;
                         gcse_dump = 1;
                         mach_dep_reorg_dump = 1;
+                        //asm_conv_done_dump = 1;
+                        tree_dump = 1;
                         break;
                     case 'A':
                         flag_debug_asm = 1;
@@ -3727,6 +3782,7 @@ main(int argc, char **argv)
                         break;
                     case 'y':
                         set_yydebug(1);
+                        c_parse_dump = 1;
                         break;
                     case 'x':
                         rtl_dump_and_exit = 1;
@@ -3882,21 +3938,28 @@ larger_than_lose:;
             else if (str[0] == 'g')
             {
                 unsigned level = 0;
-
+                unsigned dwarf = DWARF2_DEBUG;
+                
                 if (str[1] == 0)
                 {
                     level = 2; /* default debugging info level */
                 }
-                else if (str[1] >= '0' && str[1] <= '3' && str[2] == 0)
+                else if (str[1] >= '0' && str[1] <= '3')
                 {
                     level = str[1] - '0';
+                    if (str[2] == 'n' && str[3] == 0) {
+                        dwarf = NO_DEBUG;
+                    } else if (str[2] != 0) {
+                        warning("invalid debug option `-%s'", str);
+                        level = 0;
+                    }
                 }
                 else
                 {
                     warning("invalid debug option `-%s'", str);
                 }
 
-                write_symbols = (level == 0) ? NO_DEBUG : DWARF2_DEBUG;
+                write_symbols = (level == 0) ? NO_DEBUG : dwarf;
                 debug_info_level = (enum debug_info_level)level;
             }
             else if (!strcmp(str, "o"))

@@ -267,7 +267,7 @@ static int allocno_compare(const void *, const void *);
 static void global_conflicts(void);
 static void expand_preferences(void);
 static void prune_preferences(void);
-static void find_reg(int, HARD_REG_SET, int, int, int);
+static void find_reg(int, HARD_REG_SET, int, int, int, FILE *);
 static void record_one_conflict(int);
 static void record_conflicts(int *, int);
 static void mark_reg_store(rtx, rtx);
@@ -565,11 +565,11 @@ global_alloc(FILE *file)
 			   first try allocating in the class that is cheapest
 			   for this pseudo-reg.  If that fails, try any reg.  */
 			if (reg_renumber[regno] < 0 && N_REG_CLASSES > 1)
-				find_reg(order, 0, 0, 0, 0);
+				find_reg(order, 0, 0, 0, 0, file);
 
 			if (reg_renumber[regno] < 0
 			    && reg_alternate_class(regno) != NO_REGS)
-				find_reg(order, 0, 1, 0, 0);
+				find_reg(order, 0, 1, 0, 0, file);
 		}
 	}
 
@@ -899,12 +899,13 @@ prune_preferences()
    If not, do nothing.  */
 
 static void
-find_reg(allocno, losers, alt_regs_p, accept_call_clobbered, retrying)
+find_reg(allocno, losers, alt_regs_p, accept_call_clobbered, retrying, dumpfile)
 int allocno;
 HARD_REG_SET losers;
 int alt_regs_p;
 int accept_call_clobbered;
 int retrying;
+FILE *dumpfile;
 {
 	register int i, best_reg, pass;
 #ifdef HARD_REG_SET
@@ -954,6 +955,22 @@ int retrying;
 	IOR_COMPL_HARD_REG_SET(used_nopref, regs_used_so_far);
 	IOR_HARD_REG_SET(used_nopref, regs_someone_prefers[allocno]);
 
+    if (dumpfile) {
+        fprintf(dumpfile, "; Register %d hard reg conflicts\nused_nopref: ", pseudo);
+        for (i = 0; i < FIRST_PSEUDO_REGISTER; i++) {
+            if ((used_nopref >> i) & 1) {
+                fprintf(dumpfile, "%d ", i);
+            }
+        }
+        fprintf(dumpfile, "\nused1: ");
+        for (i = 0; i < FIRST_PSEUDO_REGISTER; i++) {
+            if ((used1 >> i) & 1) {
+                fprintf(dumpfile, "%d ", i);
+            }
+        }
+        fprintf(dumpfile, "\n\n");
+    }
+            
 	best_reg = -1;
 	for (i = FIRST_PSEUDO_REGISTER, pass = 0;
 	     pass <= 1 && i >= FIRST_PSEUDO_REGISTER;
@@ -973,8 +990,7 @@ int retrying;
 				register int j;
 				register int lim = regno + HARD_REGNO_NREGS(regno, mode);
 				for (j = regno + 1;
-				     (j < lim
-				      && !TEST_HARD_REG_BIT(used, j));
+				     (j < lim && !TEST_HARD_REG_BIT(used, j));
 				     j++);
 				if (j == lim) {
 					best_reg = regno;
@@ -1082,7 +1098,7 @@ int retrying;
 				COPY_HARD_REG_SET(new_losers, losers);
 
 			IOR_HARD_REG_SET(new_losers, losing_caller_save_reg_set);
-			find_reg(allocno, new_losers, alt_regs_p, 1, retrying);
+			find_reg(allocno, new_losers, alt_regs_p, 1, retrying, dumpfile);
 			if (reg_renumber[allocno_reg[allocno]] >= 0) {
 				caller_save_needed = 1;
 				return;
@@ -1184,9 +1200,10 @@ int retrying;
    If FORBIDDEN_REGS is zero, no regs are forbidden.  */
 
 void
-retry_global_alloc(regno, forbidden_regs)
+retry_global_alloc(regno, forbidden_regs, dumpfile)
 int regno;
 HARD_REG_SET forbidden_regs;
+FILE * dumpfile;
 {
 	int allocno = reg_allocno[regno];
 	if (allocno >= 0) {
@@ -1194,10 +1211,10 @@ HARD_REG_SET forbidden_regs;
 		   first try allocating in the class that is cheapest
 		   for this pseudo-reg.  If that fails, try any reg.  */
 		if (N_REG_CLASSES > 1)
-			find_reg(allocno, forbidden_regs, 0, 0, 1);
+			find_reg(allocno, forbidden_regs, 0, 0, 1, dumpfile);
 		if (reg_renumber[regno] < 0
 		    && reg_alternate_class(regno) != NO_REGS)
-			find_reg(allocno, forbidden_regs, 1, 0, 1);
+			find_reg(allocno, forbidden_regs, 1, 0, 1, dumpfile);
 
 		/* If we found a register, modify the RTL for the register to
 		   show the hard register, and mark that register live.  */
