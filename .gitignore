@@ -3,8 +3,10 @@
 *.a
 gcc_arm/Makefile
 agbcc
-agbcc_arm
 old_agbcc
+agbcc_arm
+agbcp
+agbcp_arm
 */genattr
 */genattrtab
 */gencheck
@@ -50,4 +52,3 @@ gcc_arm/s-output
 gcc_arm/s-peep
 gcc_arm/s-recog
 gcc_arm/tree-check.h
-
