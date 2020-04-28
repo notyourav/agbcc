@@ -275,7 +275,7 @@ c++.mostlyclean:
 	-rm -f cp/*$(objext) $(DEMANGLER_PROG)
 # CYGNUS LOCAL - Delete these files here instead of in realclean because they
 # are now created in the build subdirectories.
-	-rm -f cp/parse.c cp/parse.h cp/parse.output cp/y.tab.c
+	-rm -f cp/parse.output cp/y.tab.c
 c++.clean:
 	-rm -f cplib2.txt cplib2.ready
 c++.distclean:
@@ -284,7 +284,6 @@ c++.distclean:
 	-rm -f g++.c
 c++.extraclean:
 c++.maintainer-clean:
-	-rm -f cp/parse.c cp/parse.h
 #
 # Stage hooks:
 # The main makefile has already created stage?/cp.

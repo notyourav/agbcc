@@ -2338,7 +2338,7 @@ mostlyclean: lang.mostlyclean
 	-rm -f y.tab.c y.tab.h y.output
 # Delete these files here instead of in realclean because they are now created
 # in the build subdirectories.
-	-rm -f c-parse.c c-parse.output c-parse.h
+	-rm -f c-parse.output
 	-rm -f cexp.c cexp.output $(BUILD_SO1) $(BUILD_SO2) $(BUILD_SO3)
 # END CYGNUS LOCAL
 # CYGNUS LOCAL: live range
@@ -2413,8 +2413,8 @@ maintainer-clean:
 	@echo 'This command is intended for maintainers to use; it'
 	@echo 'deletes files that may need special tools to rebuild.'
 	$(MAKE) distclean lang.maintainer-clean
-	-rm -f c-parse.y c-gperf.h
-	-rm -f c-parse.c c-parse.h c-parse.output
+	-rm -f c-gperf.h
+	-rm -f c-parse.output
 	-rm -f cexp.c cexp.output TAGS 
 	-rm -f cpp.info* cpp.??s cpp.*aux
 	-rm -f gcc.info* gcc.??s gcc.*aux
