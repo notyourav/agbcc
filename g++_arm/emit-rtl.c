@@ -3535,7 +3535,8 @@ init_emit_once (line_numbers)
 	  bzero ((char *) &u, sizeof u);  /* Zero any holes in a structure.  */
 	  u.d = i == 0 ? dconst0 : i == 1 ? dconst1 : dconst2;
 
-	  bcopy ((char *) &u, (char *) &CONST_DOUBLE_LOW (tem), sizeof u);
+      for (int j = 0; j < sizeof (REAL_VALUE_TYPE) / sizeof (HOST_WIDE_INT); j++)
+        XWINT(tem, 2 + j) = u.i[j];
 	  CONST_DOUBLE_MEM (tem) = cc0_rtx;
 	  PUT_MODE (tem, mode);
 

@@ -2147,10 +2147,15 @@ immed_real_const_1 (d, mode)
   /* Search the chain for an existing CONST_DOUBLE with the right value.
      If one is found, return it.  */
 
-  for (r = const_double_chain; r; r = CONST_DOUBLE_CHAIN (r))
-    if (! bcmp ((char *) &CONST_DOUBLE_LOW (r), (char *) &u, sizeof u)
-	&& GET_MODE (r) == mode)
-      return r;
+    for (r = const_double_chain; r; r = CONST_DOUBLE_CHAIN (r))
+    {
+      for (int i = 0; i < sizeof (REAL_VALUE_TYPE) / sizeof (HOST_WIDE_INT); i++)
+        if (u.i[i] != XWINT(r, 2 + i))
+          goto not_match;
+      if (GET_MODE(r) == mode)
+        return r;
+      not_match: ;
+    }
 
   /* No; make a new one and add it to the chain.
 
@@ -2164,7 +2169,8 @@ immed_real_const_1 (d, mode)
   rtl_in_saveable_obstack ();
   r = rtx_alloc (CONST_DOUBLE);
   PUT_MODE (r, mode);
-  bcopy ((char *) &u, (char *) &CONST_DOUBLE_LOW (r), sizeof u);
+  for (int i = 0; i < sizeof (REAL_VALUE_TYPE) / sizeof (HOST_WIDE_INT); i++)
+    XWINT(r, 2 + i) = u.i[i];
   pop_obstacks ();
 
   /* Don't touch const_double_chain in nested function; see force_const_mem.
@@ -3287,8 +3293,8 @@ decode_rtx_const (mode, x, value)
       if (GET_MODE (x) != VOIDmode)
 	{
 	  value->mode = GET_MODE (x);
-	  bcopy ((char *) &CONST_DOUBLE_LOW (x),
-		 (char *) &value->un.du, sizeof value->un.du);
+      for (int i = 0; i < sizeof (REAL_VALUE_TYPE) / sizeof (HOST_WIDE_INT); i++)
+        value->un.du.i[i] = XWINT(x, 2 + i);
 	}
       else
 	{
@@ -3711,8 +3717,8 @@ output_constant_pool (fnname, fndecl)
 	case MODE_FLOAT:
 	  if (GET_CODE (x) != CONST_DOUBLE)
 	    abort ();
-
-	  bcopy ((char *) &CONST_DOUBLE_LOW (x), (char *) &u, sizeof u);
+      for (int i = 0; i < sizeof (REAL_VALUE_TYPE) / sizeof (HOST_WIDE_INT); i++)
+        u.i[i] = XWINT(x, 2 + i);
 	  assemble_real (u.d, pool->mode);
 	  break;
 
