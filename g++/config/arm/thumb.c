@@ -20,6 +20,8 @@ along with GNU CC; see the file COPYING.  If not, write to
 the Free Software Foundation, 59 Temple Place - Suite 330,
 Boston, MA 02111-1307, USA.  */
 
+#define THUMB_PE 1
+
 #include <stdio.h>
 #include <string.h>
 #include "config.h"
@@ -1408,7 +1410,7 @@ thumb_unexpanded_epilogue ()
   int leaf_function = leaf_function_p ();
   int had_to_push_lr;
 
-  if (return_used_this_function)
+  if (arm_naked_function_p (current_function_decl) || return_used_this_function)
     return "";
 
   for (regno = 0; regno < 8; regno++)
