@@ -43,6 +43,13 @@ Boston, MA 02111-1307, USA.  */
 #include "obstack.h"
 #include "toplev.h"
 
+/* A C expression whose value is nonzero if IDENTIFIER with arguments ARGS
+   is a valid machine specific attribute for DECL.
+   The attributes in ATTRIBUTES have previously been assigned to DECL.  */
+extern int arm_valid_machine_decl_attribute(tree decl, tree attributes, tree attr, tree args);
+#define VALID_MACHINE_DECL_ATTRIBUTE(DECL, ATTRIBUTES, IDENTIFIER, ARGS) \
+  arm_valid_machine_decl_attribute(DECL, ATTRIBUTES, IDENTIFIER, ARGS)
+
 #define obstack_chunk_alloc xmalloc
 #define obstack_chunk_free free
 /* obstack.[ch] explicitly declined to prototype this. */
