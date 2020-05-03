@@ -35,6 +35,9 @@
 	    /* jnf(|x|>X_TLOSS) */
             exc.type = TLOSS;
             exc.name = "jnf";
+	    exc.err = 0;
+	    exc.arg1 = (double)n;
+	    exc.arg2 = (double)x;
             exc.retval = 0.0;
             if (_LIB_VERSION == _POSIX_)
                 errno = ERANGE;
@@ -73,6 +76,9 @@
 #endif
 	    exc.type = DOMAIN;	/* should be SING for IEEE */
 	    exc.name = "ynf";
+	    exc.err = 0;
+	    exc.arg1 = (double)n;
+	    exc.arg2 = (double)x;
 	    if (_LIB_VERSION == _SVID_)
 	        exc.retval = -HUGE;
 	    else
@@ -90,6 +96,9 @@
 	    /* ynf(x>X_TLOSS) */
             exc.type = TLOSS;
             exc.name = "ynf";
+	    exc.err = 0;
+	    exc.arg1 = (double)n;
+	    exc.arg2 = (double)x;
             exc.retval = 0.0;
             if (_LIB_VERSION == _POSIX_)
                 errno = ERANGE;

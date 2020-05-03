@@ -39,6 +39,8 @@
             /* acoshf(x<1) */
             exc.type = DOMAIN;
             exc.name = "acoshf";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = (double)x;
             exc.retval = 0.0/0.0;
             if (_LIB_VERSION == _POSIX_)
                errno = EDOM;

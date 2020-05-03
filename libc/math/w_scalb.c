@@ -54,6 +54,9 @@
 	    /* scalb overflow; SVID also returns +-HUGE_VAL */
 	    exc.type = OVERFLOW;
 	    exc.name = "scalb";
+	    exc.err = 0;
+	    exc.arg1 = x;
+	    exc.arg2 = fn;
 	    exc.retval = x > 0.0 ? HUGE_VAL : -HUGE_VAL;
 	    if (_LIB_VERSION == _POSIX_)
 	       errno = ERANGE;
@@ -68,6 +71,9 @@
 	    /* scalb underflow */
 	    exc.type = UNDERFLOW;
 	    exc.name = "scalb";
+	    exc.err = 0;
+	    exc.arg1 = x;
+	    exc.arg2 = fn;
 	    exc.retval = copysign(0.0,x);
 	    if (_LIB_VERSION == _POSIX_)
 	       errno = ERANGE;

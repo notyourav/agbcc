@@ -37,6 +37,8 @@
 	    /* j0f(|x|>X_TLOSS) */
             exc.type = TLOSS;
             exc.name = "j0f";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = (double)x;
             exc.retval = 0.0;
             if (_LIB_VERSION == _POSIX_)
                errno = ERANGE;
@@ -75,6 +77,8 @@
 	    /* y0f(0) = -inf  or y0f(x<0) = NaN */
 	    exc.type = DOMAIN;	/* should be SING for IEEE y0f(0) */
 	    exc.name = "y0f";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = (double)x;
 	    if (_LIB_VERSION == _SVID_)
 	       exc.retval = -HUGE;
 	    else
@@ -92,6 +96,8 @@
 	    /* y0f(x>X_TLOSS) */
             exc.type = TLOSS;
             exc.name = "y0f";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = (double)x;
             exc.retval = 0.0;
             if (_LIB_VERSION == _POSIX_)
                 errno = ERANGE;

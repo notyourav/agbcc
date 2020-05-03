@@ -38,6 +38,9 @@
             /* fmodf(x,0) */
             exc.type = DOMAIN;
             exc.name = "fmodf";
+	    exc.err = 0;
+	    exc.arg1 = (double)x;
+	    exc.arg2 = (double)y;
             if (_LIB_VERSION == _SVID_)
                exc.retval = x;
 	    else

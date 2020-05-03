@@ -44,6 +44,9 @@
 #endif
 	    exc.type = OVERFLOW;
 	    exc.name = "hypotf";
+	    exc.err = 0;
+	    exc.arg1 = (double)x;
+	    exc.arg2 = (double)y;
 	    if (_LIB_VERSION == _SVID_)
 	       exc.retval = HUGE;
 	    else

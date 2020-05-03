@@ -44,6 +44,8 @@
 #endif
 	    exc.type = OVERFLOW;
 	    exc.name = "coshf";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = (double)x;
 	    if (_LIB_VERSION == _SVID_)
 	       exc.retval = HUGE;
 	    else

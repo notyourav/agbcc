@@ -38,6 +38,8 @@
 	    /* j1(|x|>X_TLOSS) */
             exc.type = TLOSS;
             exc.name = "j1";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = x;
             exc.retval = 0.0;
             if (_LIB_VERSION == _POSIX_)
                 errno = ERANGE;
@@ -76,6 +78,8 @@
 	    /* y1(0) = -inf  or y1(x<0) = NaN */
 	    exc.type = DOMAIN;	/* should be SING for IEEE */
 	    exc.name = "y1";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = x;
 	    if (_LIB_VERSION == _SVID_)
 	       exc.retval = -HUGE;
 	    else
@@ -93,6 +97,8 @@
 	    /* y1(x>X_TLOSS) */
             exc.type = TLOSS;
             exc.name = "y1";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = x;
             exc.retval = 0.0;
             if (_LIB_VERSION == _POSIX_)
                 errno = ERANGE;

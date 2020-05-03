@@ -39,6 +39,8 @@
                 /* atanhf(|x|>1) */
                 exc.type = DOMAIN;
                 exc.name = "atanhf";
+		exc.err = 0;
+		exc.arg1 = exc.arg2 = (double)x;
                 exc.retval = 0.0/0.0;
                 if (_LIB_VERSION == _POSIX_)
                   errno = EDOM;
@@ -49,6 +51,8 @@
                 /* atanhf(|x|=1) */
                 exc.type = SING;
                 exc.name = "atanhf";
+		exc.err = 0;
+		exc.arg1 = exc.arg2 = (double)x;
 		exc.retval = x/0.0;	/* sign(x)*inf */
                 if (_LIB_VERSION == _POSIX_)
                   errno = EDOM;

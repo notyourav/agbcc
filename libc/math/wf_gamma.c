@@ -15,6 +15,7 @@
  */
 
 #include "fdlibm.h"
+#include <reent.h>
 #include <errno.h>
 
 #ifdef __STDC__
@@ -25,11 +26,11 @@
 #endif
 {
 #ifdef _IEEE_LIBM
-	return __ieee754_gammaf_r(x,&signgam);
+	return __ieee754_gammaf_r(x,&(_REENT->_new._reent._gamma_signgam));
 #else
         float y;
 	struct exception exc;
-        y = __ieee754_gammaf_r(x,&signgam);
+        y = __ieee754_gammaf_r(x,&(_REENT->_new._reent._gamma_signgam));
         if(_LIB_VERSION == _IEEE_) return y;
         if(!finitef(y)&&finitef(x)) {
 #ifndef HUGE_VAL 
@@ -42,6 +43,8 @@
 		/* gammaf(-integer) or gammaf(0) */
 		exc.type = SING;
 		exc.name = "gammaf";
+		exc.err = 0;
+		exc.arg1 = exc.arg2 = (double)x;
                 if (_LIB_VERSION == _SVID_)
                   exc.retval = HUGE;
                 else
@@ -55,6 +58,8 @@
 		/* gammaf(finite) overflow */
 		exc.type = OVERFLOW;
 		exc.name = "gammaf";
+		exc.err = 0;
+		exc.arg1 = exc.arg2 = (double)x;
                 if (_LIB_VERSION == _SVID_)
                   exc.retval = HUGE;
                 else

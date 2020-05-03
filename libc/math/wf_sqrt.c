@@ -38,6 +38,8 @@
             /* sqrtf(negative) */
             exc.type = DOMAIN;
             exc.name = "sqrtf";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = (double)x;
             if (_LIB_VERSION == _SVID_)
               exc.retval = 0.0;
             else

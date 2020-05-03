@@ -80,6 +80,9 @@ PORTABILITY
 	    SET_HIGH_WORD(inf,0x7ff00000);	/* set inf to infinite */
 #endif
 	    exc.name = "log10";
+	    exc.err = 0;
+	    exc.arg1 = x;
+	    exc.arg2 = x;
 	    if (_LIB_VERSION == _SVID_)
                exc.retval = -HUGE;
 	    else

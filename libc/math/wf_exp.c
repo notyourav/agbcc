@@ -53,6 +53,8 @@ u_threshold= -1.0397208405e+02;  /* 0xc2cff1b5 */
 #endif
 		exc.type = OVERFLOW;
 		exc.name = "expf";
+		exc.err = 0;
+		exc.arg1 = exc.arg2 = (double)x;
 		if (_LIB_VERSION == _SVID_)
 		  exc.retval = HUGE;
 		else
@@ -69,6 +71,8 @@ u_threshold= -1.0397208405e+02;  /* 0xc2cff1b5 */
 		/* expf(finite) underflow */
 		exc.type = UNDERFLOW;
 		exc.name = "expf";
+		exc.err = 0;
+		exc.arg1 = exc.arg2 = (double)x;
 		exc.retval = 0.0;
 		if (_LIB_VERSION == _POSIX_)
 		  errno = ERANGE;

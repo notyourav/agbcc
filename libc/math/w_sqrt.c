@@ -71,6 +71,8 @@ PORTABILITY
 	if(x<0.0) {
 	  exc.type = DOMAIN;
 	  exc.name = "sqrt";
+	  exc.err = 0;
+	  exc.arg1 = exc.arg2 = x;
 	  if (_LIB_VERSION == _SVID_)
 	    exc.retval = 0.0;
           else

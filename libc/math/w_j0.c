@@ -144,6 +144,8 @@ None of the Bessel functions are in ANSI C.
 	    /* j0(|x|>X_TLOSS) */
             exc.type = TLOSS;
             exc.name = "j0";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = x;
             exc.retval = 0.0;
             if (_LIB_VERSION == _POSIX_)
                errno = ERANGE;
@@ -182,6 +184,8 @@ None of the Bessel functions are in ANSI C.
 	    /* y0(0) = -inf or y0(x<0) = NaN */
 	    exc.type = DOMAIN;	/* should be SING for IEEE y0(0) */
 	    exc.name = "y0";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = x;
 	    if (_LIB_VERSION == _SVID_)
 	       exc.retval = -HUGE;
 	    else
@@ -199,6 +203,8 @@ None of the Bessel functions are in ANSI C.
 	    /* y0(x>X_TLOSS) */
             exc.type = TLOSS;
             exc.name = "y0";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = x;
             exc.retval = 0.0;
             if (_LIB_VERSION == _POSIX_)
                errno = ERANGE;

@@ -132,6 +132,7 @@ Neither <<gamma>> nor <<gammaf>> is ANSI C.  */
  */
 
 #include "fdlibm.h"
+#include <reent.h>
 #include <errno.h>
 
 #ifndef _DOUBLE_IS_32BITS
@@ -144,11 +145,11 @@ Neither <<gamma>> nor <<gammaf>> is ANSI C.  */
 #endif
 {
 #ifdef _IEEE_LIBM
-	return __ieee754_gamma_r(x,&signgam);
+	return __ieee754_gamma_r(x,&(_REENT->_new._reent._gamma_signgam));
 #else
         double y;
 	struct exception exc;
-        y = __ieee754_gamma_r(x,&signgam);
+        y = __ieee754_gamma_r(x,&(_REENT->_new._reent._gamma_signgam));
         if(_LIB_VERSION == _IEEE_) return y;
         if(!finite(y)&&finite(x)) {
 #ifndef HUGE_VAL 
@@ -158,6 +159,8 @@ Neither <<gamma>> nor <<gammaf>> is ANSI C.  */
 	    SET_HIGH_WORD(inf,0x7ff00000);	/* set inf to infinite */
 #endif
 	    exc.name = "gamma";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = x;
             if (_LIB_VERSION == _SVID_)
                 exc.retval = HUGE;
             else

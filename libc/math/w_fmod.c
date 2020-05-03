@@ -84,6 +84,9 @@ PORTABILITY
             /* fmod(x,0) */
             exc.type = DOMAIN;
             exc.name = "fmod";
+	    exc.arg1 = x;
+	    exc.arg2 = y;
+	    exc.err = 0;
             if (_LIB_VERSION == _SVID_)
                exc.retval = x;
 	    else

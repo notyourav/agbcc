@@ -13,11 +13,7 @@
 
 /*
 FUNCTION
-<<rint>>, <<rintf>>, <<remainder>>, <<remainderf>>---round and  remainder
-INDEX
-	rint
-INDEX
-	rintf
+<<remainder>>, <<remainderf>>---round and  remainder
 INDEX
 	remainder
 INDEX
@@ -25,33 +21,26 @@ INDEX
 
 ANSI_SYNOPSIS
 	#include <math.h>
-	double rint(double <[x]>);
-	float rintf(float <[x]>);
 	double remainder(double <[x]>, double <[y]>);
 	float remainderf(float <[x]>, float <[y]>);
 
 TRAD_SYNOPSIS
 	#include <math.h>
-	double rint(<[x]>)
-	double <[x]>;
-	float rintf(<[x]>)
-	float <[x]>;
 	double remainder(<[x]>,<[y]>)
 	double <[x]>, <[y]>;
 	float remainderf(<[x]>,<[y]>)
 	float <[x]>, <[y]>;
 
 DESCRIPTION
-<<rint>> and <<rintf>> returns their argument rounded to the nearest
-integer.  <<remainder>> and <<remainderf>> find the remainder of
+<<remainder>> and <<remainderf>> find the remainder of
 <[x]>/<[y]>; this value is in the range -<[y]>/2 .. +<[y]>/2.
 
 RETURNS
-<<rint>> and <<remainder>> return the integer result as a double.
+<<remainder>> returns the integer result as a double.
 
 PORTABILITY
-<<rint>> and <<remainder>> are System V release 4.  <<rintf>> and
-<<remainderf>> are extensions.
+<<remainder>> is a System V release 4.
+<<remainderf>> is an extension.
 
 */
 
@@ -82,6 +71,9 @@ PORTABILITY
             /* remainder(x,0) */
             exc.type = DOMAIN;
             exc.name = "remainder";
+	    exc.err = 0;
+	    exc.arg1 = x;
+	    exc.arg2 = y;
             exc.retval = 0.0/0.0;
             if (_LIB_VERSION == _POSIX_)
                errno = EDOM;

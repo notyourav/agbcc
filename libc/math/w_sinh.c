@@ -98,6 +98,8 @@ QUICKREF
 #endif
 	    exc.type = OVERFLOW;
 	    exc.name = "sinh";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = x;
 	    if (_LIB_VERSION == _SVID_)
 	       exc.retval = ( (x>0.0) ? HUGE : -HUGE);
 	    else

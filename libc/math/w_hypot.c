@@ -86,6 +86,9 @@ PORTABILITY
 #endif
 	    exc.type = OVERFLOW;
 	    exc.name = "hypot";
+	    exc.err = 0;
+	    exc.arg1 = x;
+	    exc.arg2 = y;
 	    if (_LIB_VERSION == _SVID_)
 	       exc.retval = HUGE;
 	    else

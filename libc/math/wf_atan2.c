@@ -39,6 +39,7 @@
 	    /* atan2f(+-0,+-0) */
 	    exc.arg1 = y;
 	    exc.arg2 = x;
+	    exc.err = 0;
 	    exc.type = DOMAIN;
 	    exc.name = "atan2f";
 	    exc.retval = 0.0;

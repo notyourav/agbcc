@@ -44,6 +44,8 @@
 #endif
 	    exc.type = OVERFLOW;
 	    exc.name = "sinhf";
+	    exc.err = 0;
+	    exc.arg1 = exc.arg2 = (double)x;
 	    if (_LIB_VERSION == _SVID_)
 	       exc.retval = ( (x>0.0) ? HUGE : -HUGE);
 	    else

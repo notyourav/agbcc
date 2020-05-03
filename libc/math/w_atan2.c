@@ -99,6 +99,7 @@ PORTABILITY
 	    exc.arg2 = x;
 	    exc.type = DOMAIN;
 	    exc.name = "atan2";
+	    exc.err = 0;
 	    exc.retval = 0.0;
 	    if(_LIB_VERSION == _POSIX_)
 	       errno = EDOM;

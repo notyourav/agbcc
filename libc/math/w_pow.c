@@ -90,6 +90,9 @@ PORTABILITY
 		/* error only if _LIB_VERSION == _SVID_ & _XOPEN_ */
 		exc.type = DOMAIN;
 		exc.name = "pow";
+		exc.err = 0;
+		exc.arg1 = x;
+		exc.arg2 = y;
 		exc.retval = x;
 		if (_LIB_VERSION == _IEEE_ ||
 		    _LIB_VERSION == _POSIX_) exc.retval = 1.0;
@@ -108,6 +111,9 @@ PORTABILITY
 		/* error only if _LIB_VERSION == _SVID_ */
 		exc.type = DOMAIN;
 		exc.name = "pow";
+		exc.err = 0;
+		exc.arg1 = x;
+		exc.arg2 = y;
 		exc.retval = 0.0;
 		if (_LIB_VERSION != _SVID_) exc.retval = 1.0;
 		else if (!matherr(&exc)) {
@@ -121,6 +127,9 @@ PORTABILITY
 		/* 0**neg */
 		exc.type = DOMAIN;
 		exc.name = "pow";
+		exc.err = 0;
+		exc.arg1 = x;
+		exc.arg2 = y;
 		if (_LIB_VERSION == _SVID_) 
 		  exc.retval = 0.0;
 		else
@@ -142,6 +151,9 @@ PORTABILITY
 		    /* neg**non-integral */
 		    exc.type = DOMAIN;
 		    exc.name = "pow";
+		    exc.err = 0;
+		    exc.arg1 = x;
+		    exc.arg2 = y;
 		    if (_LIB_VERSION == _SVID_) 
 		        exc.retval = 0.0;
 		    else 
@@ -158,6 +170,9 @@ PORTABILITY
 		    /* pow(x,y) overflow */
 		    exc.type = OVERFLOW;
 		    exc.name = "pow";
+		    exc.err = 0;
+		    exc.arg1 = x;
+		    exc.arg2 = y;
 		    if (_LIB_VERSION == _SVID_) {
 		       exc.retval = HUGE;
 		       y *= 0.5;
@@ -182,6 +197,9 @@ PORTABILITY
 	    /* pow(x,y) underflow */
 	    exc.type = UNDERFLOW;
 	    exc.name = "pow";
+	    exc.err = 0;
+	    exc.arg1 = x;
+	    exc.arg2 = y;
 	    exc.retval =  0.0;
 	    if (_LIB_VERSION == _POSIX_)
 	        errno = ERANGE;

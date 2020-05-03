@@ -98,6 +98,8 @@ u_threshold= -7.45133219101941108420e+02;  /* 0xc0874910, 0xD52D3051 */
 #endif
 		exc.type = OVERFLOW;
 		exc.name = "exp";
+		exc.err = 0;
+		exc.arg1 = exc.arg2 = x;
 		if (_LIB_VERSION == _SVID_)
 		  exc.retval = HUGE;
 		else
@@ -114,6 +116,8 @@ u_threshold= -7.45133219101941108420e+02;  /* 0xc0874910, 0xD52D3051 */
 		/* exp(finite) underflow */
 		exc.type = UNDERFLOW;
 		exc.name = "exp";
+		exc.err = 0;
+		exc.arg1 = exc.arg2 = x;
 		exc.retval = 0.0;
 		if (_LIB_VERSION == _POSIX_)
 		  errno = ERANGE;

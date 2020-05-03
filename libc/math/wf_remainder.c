@@ -38,6 +38,9 @@
             /* remainderf(x,0) */
             exc.type = DOMAIN;
             exc.name = "remainderf";
+	    exc.err = 0;
+	    exc.arg1 = (double)x;
+	    exc.arg2 = (double)y;
             exc.retval = 0.0/0.0;
             if (_LIB_VERSION == _POSIX_)
                errno = EDOM;
