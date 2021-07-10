@@ -36,6 +36,10 @@ Boston, MA 02111-1307, USA.  */
 #define NULL 0
 #endif
 
+#undef HAVE_PUTC_UNLOCKED
+#undef HAVE_FPUTC_UNLOCKED
+#undef HAVE_FPUTS_UNLOCKED
+
 /* The compiler is not a multi-threaded application and therefore we
    do not have to use the locking functions.  */
 #ifdef HAVE_PUTC_UNLOCKED
