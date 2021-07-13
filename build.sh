@@ -7,6 +7,8 @@ if [ ! -z "$CC" ]; then CCOPT=CC=$CC; fi
 if [ ! -z "$CXX" ]; then CXXOPT=CXX=$CXX; fi
 make -C gcc clean
 make -C gcc old $CCOPT $CXXOPT
+make -C g++ clean
+make -C g++_arm clean
 mv gcc/old_agbcc .
 make -C gcc clean
 make -C gcc $CCOPT $CXXOPT

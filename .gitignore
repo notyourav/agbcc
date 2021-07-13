@@ -21,6 +21,10 @@ agbcp_arm
 */genpeep
 */genrecog
 */config.log
+g++/config.cache
+g++/config.cache
+g++_arm/config.bak
+g++_arm/config.cache
 gcc_arm/auto-host.h
 gcc_arm/config.cache
 gcc_arm/config.log

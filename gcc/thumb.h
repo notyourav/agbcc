@@ -87,23 +87,11 @@ extern int target_flags;
    that says to advance the location counter
    to a multiple of 2**LOG bytes.  */
 
-#ifdef OLD_ASM
-
-#define ASM_OUTPUT_ALIGN(STREAM,LOG)               \
-{                                                  \
-    if ((LOG) > 0)                                 \
-        fprintf (STREAM, "\t.align\t%d\n", (LOG)); \
-}
-
-#else
-
 #define ASM_OUTPUT_ALIGN(STREAM,LOG)                  \
 {                                                     \
     if ((LOG) > 0)                                    \
         fprintf (STREAM, "\t.align\t%d, 0\n", (LOG)); \
 }
-
-#endif
 
 /* Output a common block */
 #define ASM_OUTPUT_COMMON(STREAM, NAME, SIZE, ROUNDED)  		\

@@ -137,7 +137,7 @@ extern int target_flags;
 #define ASM_OUTPUT_ALIGN(STREAM,LOG)		\
 {						\
   if ((LOG) > 0)				\
-    fprintf (STREAM, "\t.align\t%d\n", (LOG));	\
+    fprintf (STREAM, "\t.align\t%d, 0\n", (LOG));	\
 }
 
 /* Output a common block */
