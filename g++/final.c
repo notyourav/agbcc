@@ -689,6 +689,22 @@ static rtx *uid_align;
 static int *uid_shuid;
 static struct label_alignment *label_align;
 
+static void
+print_wint(FILE *file, HOST_WIDE_INT value)
+{
+  const char *fmt = HOST_WIDE_INT_PRINT_DEC;
+  if (flag_hex_asm)
+    {
+      fmt = HOST_WIDE_INT_PRINT_HEX;
+      if (value < 0)
+        {
+          fputc('-', file);
+          value = -value;
+        }
+    }
+  fprintf(file, fmt, value);
+}
+
 /* Indicate that branch shortening hasn't yet been done.  */
 
 void
@@ -3567,8 +3583,7 @@ output_asm_insn (template, operands)
 	    else if (letter == 'n')
 	      {
 		if (GET_CODE (operands[c]) == CONST_INT)
-		  fprintf (asm_out_file, HOST_WIDE_INT_PRINT_DEC,
-			   - INTVAL (operands[c]));
+		  print_wint(asm_out_file, -INTVAL(operands[c]));
 		else
 		  {
 		    putc ('-', asm_out_file);
@@ -3703,7 +3718,7 @@ output_addr_const (file, x)
       break;
 
     case CONST_INT:
-      fprintf (file, HOST_WIDE_INT_PRINT_DEC, INTVAL (x));
+      print_wint(asm_out_file, INTVAL(x));
       break;
 
     case CONST:
@@ -3722,7 +3737,8 @@ output_addr_const (file, x)
 	  else if  (CONST_DOUBLE_LOW (x) < 0)
 	    fprintf (file, HOST_WIDE_INT_PRINT_HEX, CONST_DOUBLE_LOW (x));
 	  else
-	    fprintf (file, HOST_WIDE_INT_PRINT_DEC, CONST_DOUBLE_LOW (x));
+	    print_wint(file, CONST_DOUBLE_LOW(x));
+
 	}
       else
 	/* We can't handle floating point constants;

@@ -1117,16 +1117,20 @@ thumb_function_prologue (f, frame_size)
   if (current_function_pretend_args_size)
     {
       if (store_arg_regs)
-	{
-	  asm_fprintf (f, "\tpush\t{");
-	  for (regno = 4 - current_function_pretend_args_size / 4 ; regno < 4;
-	       regno++)
-	    asm_fprintf (f, "%s%s", reg_names[regno], regno == 3 ? "" : ", ");
-	  asm_fprintf (f, "}\n");
-	}
+      {
+        asm_fprintf (f, "\tpush\t{");
+        for (regno = 4 - current_function_pretend_args_size / 4 ; regno < 4;
+            regno++)
+          asm_fprintf (f, "%s%s", reg_names[regno], regno == 3 ? "" : ", ");
+        asm_fprintf (f, "}\n");
+      }
       else
-	asm_fprintf (f, "\tsub\t%Rsp, %Rsp, #%d\n", 
-		     current_function_pretend_args_size);
+      {
+        if (flag_hex_asm)
+            asm_fprintf(f, "\tsub\t%Rsp, %Rsp, #0x%x\n", current_function_pretend_args_size);
+        else
+            asm_fprintf(f, "\tsub\t%Rsp, %Rsp, #%d\n", current_function_pretend_args_size);
+      }
     }
 
   for (regno = 0; regno < 8; regno++)
@@ -1555,10 +1559,20 @@ thumb_unexpanded_epilogue ()
 	}
       
       /* Remove the argument registers that were pushed onto the stack.  */
-      asm_fprintf (asm_out_file, "\tadd\t%s, %s, #%d\n",
-		   reg_names [STACK_POINTER],
-		   reg_names [STACK_POINTER],
-		   current_function_pretend_args_size);
+      if (flag_hex_asm)
+      {
+        asm_fprintf (asm_out_file, "\tadd\t%s, %s, 0x%d\n",
+            reg_names [STACK_POINTER],
+            reg_names [STACK_POINTER],
+            current_function_pretend_args_size);
+      }
+      else
+      {
+        asm_fprintf (asm_out_file, "\tadd\t%s, %s, #%d\n",
+            reg_names [STACK_POINTER],
+            reg_names [STACK_POINTER],
+            current_function_pretend_args_size);
+      }
       
       thumb_exit (asm_out_file, had_to_push_lr ? ARG_4_REGISTER : LINK_REGISTER);
     }

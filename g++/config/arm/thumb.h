@@ -1104,10 +1104,11 @@ int thumb_shiftable_const ();
     fprintf ((STREAM), "%s!", reg_names[REGNO (XEXP (X, 0))]);	\
   else if (GET_CODE ((X)) == PLUS)				\
     {								\
-      if (GET_CODE (XEXP ((X), 1)) == CONST_INT)		\
-	fprintf ((STREAM), "[%s, #%d]", 			\
-		 reg_names[REGNO (XEXP ((X), 0))],		\
-		 (int) INTVAL (XEXP ((X), 1)));			\
+      if (GET_CODE (XEXP ((X), 1)) == CONST_INT) { \
+        fprintf(asm_out_file, "[%s, #", reg_names[REGNO(XEXP(x, 0))]); \
+            print_wint(asm_out_file, INTVAL(XEXP(x, 1))); \
+            fprintf(asm_out_file, "]"); \
+            }		\
       else							\
 	fprintf ((STREAM), "[%s, %s]",				\
 		 reg_names[REGNO (XEXP ((X), 0))],		\

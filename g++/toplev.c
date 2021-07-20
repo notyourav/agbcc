@@ -780,6 +780,8 @@ int flag_strict_aliasing = 0;
 /* Instrument functions with calls at entry and exit, for profiling.  */
 int flag_instrument_function_entry_exit = 0;
 
+/* Use hex instead of decimal in ASM output.  */
+int flag_hex_asm = 0;
 
 /* Table of supported debugging formats.  */
 static struct
@@ -1004,7 +1006,9 @@ lang_independent_options f_options[] =
   {"instrument-functions", &flag_instrument_function_entry_exit, 1,
    "Instrument function entry/exit with profiling calls"},
   {"leading-underscore", &flag_leading_underscore, 1,
-   "External symbols have a leading underscore" }
+   "External symbols have a leading underscore" },
+  {"hex-asm", &flag_hex_asm, 1,
+   "Use hex instead of decimal in assembly output"},
 };
 
 #define NUM_ELEM(a)  (sizeof (a) / sizeof ((a)[0]))

@@ -545,3 +545,6 @@ enum graph_dump_types
   vcg
 };
 extern enum graph_dump_types graph_dump_format;
+
+/* Nonzero if ASM output should use hex instead of decimal.  */
+extern int flag_hex_asm;
