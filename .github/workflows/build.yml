@@ -1,4 +1,4 @@
-name: Build and release agbcc
+name: Build and release agbcp
 
 on: [push]
 
