@@ -978,9 +978,6 @@ assemble_start_function (decl, fnname)
     UNIQUE_SECTION (decl, 0);
 #endif
 
-  // agbcp: align unique sections
-  ASM_OUTPUT_ALIGN(asm_out_file, 2);
-
   function_section (decl);
 
   /* Tell assembler to move to target machine's alignment for functions.  */
