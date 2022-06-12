@@ -979,7 +979,7 @@ assemble_start_function (decl, fnname)
 #endif
 
   // agbcp: align unique sections
-  ASM_OUTPUT_ALIGN(asm_out_file, 2);
+   ASM_OUTPUT_ALIGN(asm_out_file, 2);
 
   function_section (decl);
 
